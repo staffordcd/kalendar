@@ -7,7 +7,7 @@
 		events: [],
 		color: "red",
 		showdays: true,
-		tracking: true,
+		tracking: false,
 		template: 	'<div class="c-month-view">'+
 						'<div class="c-month-arrow-left">‹</div>'+
 						'<p></p>'+
@@ -59,29 +59,9 @@
 
 		this.currentTime = new Date();
 		this.currentTime.setHours(0,0,0,0);
-		if(this.options.tracking) {
-			this.tracking();
-		}
 		this.googleCal();
 	}
-	kalendar.prototype.tracking = function() {
-		$trackimg = $('<img src="">');
-		this.trackimg = $trackimg;
-		this.element.append(this.trackimg);
-		var trackobj = {
-			url: window.location.href,
-			color: this.options.color,
-			showdays: this.options.showdays,
-			firstdayofweek: this.options.firstDayOfWeek
-		};
-		var src = 'http://www.ericwenn.se/php/trackingkalendar.php';
-		var i = 0;
-		$.each(trackobj, function(k,v) {
-			src += (i==0?'?':'&')+k+'='+encodeURIComponent(v);
-			i++;
-		});
-		this.trackimg.attr('src',src);
-	}
+
 	kalendar.prototype.googleCal = function() {
 		var f = function(c,k) { 
 			$.getJSON("https://www.googleapis.com/calendar/v3/calendars/"+c+"/events?key="+k, function(data) {
